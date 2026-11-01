@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/menu_rule" android:title="@string/menu_rule" />
     <item android:id="@+id/menu_size" android:title="@string/menu_size" />
+    <item android:id="@+id/menu_engine" android:title="@string/menu_engine" />
     <item android:id="@+id/menu_level" android:title="@string/menu_level" />
     <item android:id="@+id/menu_numbers" android:title="@string/menu_numbers" android:checkable="true" />
     <item android:id="@+id/menu_coords" android:title="@string/menu_coords" android:checkable="true" />

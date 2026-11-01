@@ -20,6 +20,7 @@ import io.github.yixinboard.engine.Engine
 import io.github.yixinboard.engine.Game
 import io.github.yixinboard.engine.Rule
 import io.github.yixinboard.engine.SearchResult
+import io.github.yixinboard.engine.SlowRenju
 import io.github.yixinboard.engine.WHITE
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -49,6 +50,8 @@ class MainActivity : Activity() {
     private var levelIdx = 2
     private var showForbidden = true
     private var confirmMove = false
+    /** 0 = SlowRenju (when available and the board is 15x15), 1 = built-in engine. */
+    private var engineChoice = 0
 
     /** When true the AI does not start on its own (after undo / stop) until the next human action. */
     private var paused = false
@@ -57,7 +60,12 @@ class MainActivity : Activity() {
     private var thinking: Thinking? = null
     private var version = 0
 
-    private class Thinking(val version: Int, val hint: Boolean, val cancel: AtomicBoolean = AtomicBoolean(false)) {
+    private class Thinking(
+        val version: Int,
+        val hint: Boolean,
+        val engineName: String,
+        val cancel: AtomicBoolean = AtomicBoolean(false),
+    ) {
         @Volatile var discard = false
     }
 
@@ -117,6 +125,7 @@ class MainActivity : Activity() {
         levelIdx = prefs.getInt("level", 2).coerceIn(0, LEVELS_MS.size - 1)
         showForbidden = prefs.getBoolean("showForbidden", true)
         confirmMove = prefs.getBoolean("confirm", false)
+        engineChoice = prefs.getInt("engine", 0).coerceIn(0, 1)
         boardView.showNumbers = prefs.getBoolean("numbers", false)
         boardView.showCoords = prefs.getBoolean("coords", true)
         paused = prefs.getBoolean("paused", false)
@@ -138,6 +147,7 @@ class MainActivity : Activity() {
             .putInt("level", levelIdx)
             .putBoolean("showForbidden", showForbidden)
             .putBoolean("confirm", confirmMove)
+            .putInt("engine", engineChoice)
             .putBoolean("numbers", boardView.showNumbers)
             .putBoolean("coords", boardView.showCoords)
             .putBoolean("paused", paused)
@@ -232,22 +242,36 @@ class MainActivity : Activity() {
 
     // ------------------------------------------------------------------ engine thread
 
+    private fun useSlowRenju() = engineChoice == 0 && SlowRenju.supports(size)
+
+    private fun engineName() = getString(if (useSlowRenju()) R.string.engine_slowrenju else R.string.engine_builtin)
+
     private fun startThinking(hint: Boolean) {
-        val t = Thinking(++version, hint)
+        val slow = useSlowRenju()
+        val t = Thinking(++version, hint, engineName())
         thinking = t
         val moves = ArrayList(game.moves)
         val side = game.sideToMove
-        val engine = Engine(size, rule)
+        val gameRule = rule
+        val gameSize = size
         val time = if (hint) minOf(LEVELS_MS[levelIdx], 3000L) else LEVELS_MS[levelIdx]
         refresh()
-        Thread {
-            engine.setPosition(moves)
-            val result = engine.think(side, time, t.cancel) { progress ->
-                handler.post { if (thinking === t && !t.discard) showEngineInfo(progress) }
+        val onProgress: (SearchResult) -> Unit = { progress ->
+            handler.post { if (thinking === t && !t.discard) showEngineInfo(t.engineName, progress) }
+        }
+        val work = Runnable {
+            val result = if (slow) {
+                SlowRenju.think(moves, gameRule, time, t.cancel, onProgress)
+            } else {
+                Engine(gameSize, gameRule).run {
+                    setPosition(moves)
+                    think(side, time, t.cancel, onProgress)
+                }
             }
             handler.post { onThinkingDone(t, result) }
-        }.apply {
-            name = "yixin-engine"
+        }
+        // Large stack: the native SlowRenju search recurses deeply.
+        Thread(null, work, "yixin-engine", SlowRenju.STACK_SIZE).apply {
             priority = Thread.NORM_PRIORITY - 1
             start()
         }
@@ -259,7 +283,7 @@ class MainActivity : Activity() {
             refresh()
             return
         }
-        showEngineInfo(r)
+        showEngineInfo(t.engineName, r)
         if (t.hint) {
             boardView.hint = r.move
             infoText.text = getString(R.string.hint_result, game.coord(r.move)) + "  ·  " + infoText.text
@@ -279,9 +303,9 @@ class MainActivity : Activity() {
         version++
     }
 
-    private fun showEngineInfo(r: SearchResult) {
+    private fun showEngineInfo(engine: String, r: SearchResult) {
         if (r.vcf) {
-            infoText.text = getString(R.string.engine_vcf)
+            infoText.text = engine + " · " + getString(R.string.engine_vcf)
             return
         }
         val eval = when {
@@ -294,7 +318,7 @@ class MainActivity : Activity() {
             r.nodes >= 1_000 -> "%dk".format(r.nodes / 1000)
             else -> r.nodes.toString()
         }
-        infoText.text = getString(R.string.engine_info, r.depth, eval, nodes, r.elapsedMs / 1000.0)
+        infoText.text = engine + " · " + getString(R.string.engine_info, r.depth, eval, nodes, r.elapsedMs / 1000.0)
     }
 
     // ------------------------------------------------------------------ UI refresh
@@ -309,7 +333,7 @@ class MainActivity : Activity() {
             t != null -> getString(if (game.sideToMove == BLACK) R.string.thinking_black else R.string.thinking_white)
             else -> getString(if (game.sideToMove == BLACK) R.string.turn_black else R.string.turn_white)
         }
-        title = getString(R.string.app_name) + " · " + ruleShortName(rule) + " · " + size + "×" + size
+        title = ruleShortName(rule) + " · " + size + "×" + size + " · " + engineName()
         thinkBtn.text = getString(if (t != null) R.string.stop else R.string.play_now)
         undoBtn.isEnabled = game.moves.isNotEmpty()
         redoBtn.isEnabled = game.canRedo
@@ -347,6 +371,7 @@ class MainActivity : Activity() {
             R.id.menu_rule -> chooseRule()
             R.id.menu_size -> chooseSize()
             R.id.menu_level -> chooseLevel()
+            R.id.menu_engine -> chooseEngine()
             R.id.menu_numbers -> boardView.showNumbers = !boardView.showNumbers
             R.id.menu_coords -> boardView.showCoords = !boardView.showCoords
             R.id.menu_forbidden -> showForbidden = !showForbidden
@@ -355,7 +380,7 @@ class MainActivity : Activity() {
             R.id.menu_paste -> pasteRecord()
             R.id.menu_about -> AlertDialog.Builder(this)
                 .setTitle(R.string.app_name)
-                .setMessage(getString(R.string.about_text) + "\n\nv" + appVersion())
+                .setMessage(getString(R.string.about_text) + "\n\n" + getString(R.string.about_slowrenju) + "\n\nv" + appVersion())
                 .setPositiveButton(R.string.ok, null)
                 .show()
             else -> return super.onOptionsItemSelected(item)
@@ -396,6 +421,20 @@ class MainActivity : Activity() {
     private fun applyBoardChange(change: () -> Unit) {
         val run = { change(); newGame() }
         if (game.moves.isEmpty() || game.isOver) run() else confirm(getString(R.string.change_needs_new_game), run)
+    }
+
+    private fun chooseEngine() {
+        val names = arrayOf(getString(R.string.engine_slowrenju_long), getString(R.string.engine_builtin_long))
+        AlertDialog.Builder(this)
+            .setTitle(R.string.menu_engine)
+            .setSingleChoiceItems(names, engineChoice) { d, which ->
+                engineChoice = which
+                saveState()
+                refresh()
+                d.dismiss()
+                if (which == 0 && !SlowRenju.supports(size)) toast(getString(R.string.engine_slowrenju_unsupported))
+            }
+            .show()
     }
 
     private fun chooseLevel() {

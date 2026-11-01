@@ -52,5 +52,12 @@
     <string name="change_needs_new_game">새 게임이 시작됩니다. 계속할까요?</string>
     <string name="ok">확인</string>
     <string name="cancel">취소</string>
-    <string name="about_text">안드로이드용 Yixin 오목판\n\nYixin-Board를 바탕으로 만든 오목/렌주 판이며, AI(알파-베타 탐색 + VCF 탐색)를 내장하고 있습니다.\n\n규칙: 자유룰, 표준룰(정확히 5목), 렌주룰(삼삼·사사·장목 금수 판정).\n\nSimplified BSD License.</string>
+    <string name="about_text">안드로이드용 Yixin 오목판\n\nYixin-Board를 바탕으로 만든 오목/렌주 판이며, AI(알파-베타 탐색 + VCF 탐색)를 내장하고 있습니다.\n\n규칙: 자유룰, 표준룰(정확히 5목), 렌주룰(삼삼·사사·장목 금수 판정).</string>
+    <string name="menu_engine">AI 엔진</string>
+    <string name="engine_slowrenju">SlowRenju</string>
+    <string name="engine_builtin">내장 엔진</string>
+    <string name="engine_slowrenju_long">SlowRenju (더 강함, 15×15 전용)</string>
+    <string name="engine_builtin_long">내장 엔진 (모든 판 크기)</string>
+    <string name="engine_slowrenju_unsupported">SlowRenju는 15×15만 지원합니다. 이 판에서는 내장 엔진을 사용합니다</string>
+    <string name="about_slowrenju">AI 엔진: SlowRenju (Tianyi Hao, GPL v3), 속도 최적화 적용. SlowRenju를 포함하므로 이 앱은 GNU GPL v3로 배포됩니다. 소스 코드: github.com/samang600/Yixin-Board</string>
 </resources>

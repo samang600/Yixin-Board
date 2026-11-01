@@ -52,5 +52,12 @@
     <string name="change_needs_new_game">这将开始新局，是否继续？</string>
     <string name="ok">确定</string>
     <string name="cancel">取消</string>
-    <string name="about_text">弈心棋盘 Android 版\n\n基于 Yixin-Board 的五子棋/连珠棋盘，内置电脑引擎（Alpha-Beta 搜索与 VCF 求解）。\n\n规则：无禁手、标准（恰好五连）、有禁手（三三、四四、长连禁手判定）。\n\nSimplified BSD License.</string>
+    <string name="about_text">弈心棋盘 Android 版\n\n基于 Yixin-Board 的五子棋/连珠棋盘，内置电脑引擎（Alpha-Beta 搜索与 VCF 求解）。\n\n规则：无禁手、标准（恰好五连）、有禁手（三三、四四、长连禁手判定）。</string>
+    <string name="menu_engine">电脑引擎</string>
+    <string name="engine_slowrenju">SlowRenju</string>
+    <string name="engine_builtin">内置引擎</string>
+    <string name="engine_slowrenju_long">SlowRenju（更强，仅限 15×15）</string>
+    <string name="engine_builtin_long">内置引擎（所有棋盘大小）</string>
+    <string name="engine_slowrenju_unsupported">SlowRenju 仅支持 15×15，此棋盘使用内置引擎</string>
+    <string name="about_slowrenju">电脑引擎：SlowRenju（郝天一，GPL v3），已做速度优化。由于包含 SlowRenju，本应用以 GNU GPL v3 发布。源代码：github.com/samang600/Yixin-Board</string>
 </resources>

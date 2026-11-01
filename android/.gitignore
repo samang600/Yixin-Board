@@ -4,3 +4,7 @@ local.properties
 .idea/
 *.iml
 captures/
+.kotlin/
+.cxx/
+app/.cxx/
+hs_err_pid*.log
