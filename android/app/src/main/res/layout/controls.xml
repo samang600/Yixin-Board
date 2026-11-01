@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button android:id="@+id/btn_new" style="@style/ControlButton" android:text="@string/new_game" />
+        <Button android:id="@+id/btn_undo" style="@style/ControlButton" android:text="@string/undo" />
+        <Button android:id="@+id/btn_redo" style="@style/ControlButton" android:text="@string/redo" />
+        <Button android:id="@+id/btn_hint" style="@style/ControlButton" android:text="@string/hint" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ToggleButton android:id="@+id/btn_ai_black" style="@style/ControlButton"
+            android:textOn="@string/ai_black_on" android:textOff="@string/ai_black_off" />
+        <ToggleButton android:id="@+id/btn_ai_white" style="@style/ControlButton"
+            android:textOn="@string/ai_white_on" android:textOff="@string/ai_white_off" />
+        <Button android:id="@+id/btn_think" style="@style/ControlButton" android:text="@string/play_now" />
+    </LinearLayout>
+</LinearLayout>

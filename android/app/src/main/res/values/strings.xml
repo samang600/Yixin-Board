@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Yixin Board</string>
+    <string name="new_game">New</string>
+    <string name="undo">Undo</string>
+    <string name="redo">Redo</string>
+    <string name="hint">Hint</string>
+    <string name="ai_black_on">● AI</string>
+    <string name="ai_black_off">● Human</string>
+    <string name="ai_white_on">○ AI</string>
+    <string name="ai_white_off">○ Human</string>
+    <string name="play_now">AI move</string>
+    <string name="stop">Stop</string>
+
+    <string name="menu_rule">Rule</string>
+    <string name="menu_size">Board size</string>
+    <string name="menu_level">AI thinking time</string>
+    <string name="menu_numbers">Show move numbers</string>
+    <string name="menu_coords">Show coordinates</string>
+    <string name="menu_forbidden">Show forbidden points</string>
+    <string name="menu_confirm">Tap twice to place</string>
+    <string name="menu_copy">Copy game record</string>
+    <string name="menu_paste">Paste game record</string>
+    <string name="menu_about">About</string>
+
+    <string name="rule_freestyle">Freestyle (five or more)</string>
+    <string name="rule_standard">Standard (exactly five)</string>
+    <string name="rule_renju">Renju (forbidden moves for black)</string>
+    <string name="rule_short_0">Freestyle</string>
+    <string name="rule_short_1">Standard</string>
+    <string name="rule_short_2">Renju</string>
+    <string name="seconds">%1$s s</string>
+
+    <string name="turn_black">Black to move</string>
+    <string name="turn_white">White to move</string>
+    <string name="thinking_black">AI (black) is thinking…</string>
+    <string name="thinking_white">AI (white) is thinking…</string>
+    <string name="hint_thinking">Looking for the best move…</string>
+    <string name="black_wins">Black wins!</string>
+    <string name="white_wins">White wins!</string>
+    <string name="draw">Draw</string>
+    <string name="forbidden_move">Forbidden move for black (renju)</string>
+    <string name="engine_info">Depth %1$d · Eval %2$s · %3$s nodes · %4$.1f s</string>
+    <string name="engine_win">winning</string>
+    <string name="engine_loss">losing</string>
+    <string name="engine_vcf">VCF found (forced win by fours)</string>
+    <string name="hint_result">Hint: %1$s</string>
+    <string name="record_copied">Game record copied</string>
+    <string name="record_invalid">No valid game record on the clipboard</string>
+    <string name="record_loaded">Loaded %1$d moves</string>
+    <string name="new_game_confirm">Start a new game?</string>
+    <string name="change_needs_new_game">This starts a new game. Continue?</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="about_text">Yixin Board for Android\n\nA gomoku / renju board based on Yixin-Board, with a built-in AI (alpha-beta search with VCF solver).\n\nRules: freestyle, standard (exactly five) and renju with forbidden-move detection (double-three, double-four, overline).\n\nSimplified BSD License.</string>
+</resources>
