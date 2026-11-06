@@ -1,0 +1,6 @@
+[submodule "android/third_party/rapfi"]
+	path = android/third_party/rapfi
+	url = https://github.com/dotb1ue/rapfi
+[submodule "android/third_party/rapfi-networks"]
+	path = android/third_party/rapfi-networks
+	url = https://github.com/dhbloo/rapfi-networks

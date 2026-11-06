@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">弈心棋盘</string>
+    <string name="new_game">新局</string>
+    <string name="undo">悔棋</string>
+    <string name="redo">重做</string>
+    <string name="hint">提示</string>
+    <string name="ai_black_on">● 电脑</string>
+    <string name="ai_black_off">● 玩家</string>
+    <string name="ai_white_on">○ 电脑</string>
+    <string name="ai_white_off">○ 玩家</string>
+    <string name="play_now">电脑走</string>
+    <string name="stop">停止</string>
+
+    <string name="menu_rule">规则</string>
+    <string name="menu_size">棋盘大小</string>
+    <string name="menu_level">电脑思考时间</string>
+    <string name="menu_numbers">显示序号</string>
+    <string name="menu_coords">显示坐标</string>
+    <string name="menu_forbidden">显示禁手</string>
+    <string name="menu_confirm">点击两次落子</string>
+    <string name="menu_copy">复制棋谱</string>
+    <string name="menu_paste">粘贴棋谱</string>
+    <string name="menu_about">关于</string>
+
+    <string name="rule_freestyle">无禁手（五连或长连）</string>
+    <string name="rule_standard">标准（恰好五连）</string>
+    <string name="rule_renju">有禁手（黑棋禁手）</string>
+    <string name="rule_short_0">无禁手</string>
+    <string name="rule_short_1">标准</string>
+    <string name="rule_short_2">有禁手</string>
+    <string name="seconds">%1$s 秒</string>
+
+    <string name="turn_black">轮到黑棋</string>
+    <string name="turn_white">轮到白棋</string>
+    <string name="thinking_black">电脑（黑）思考中…</string>
+    <string name="thinking_white">电脑（白）思考中…</string>
+    <string name="hint_thinking">正在寻找最佳着法…</string>
+    <string name="black_wins">黑棋胜！</string>
+    <string name="white_wins">白棋胜！</string>
+    <string name="draw">和棋</string>
+    <string name="forbidden_move">黑棋禁手</string>
+    <string name="engine_info">深度 %1$d · 评估 %2$s · %3$s 节点 · %4$.1f 秒</string>
+    <string name="engine_win">必胜</string>
+    <string name="engine_loss">必败</string>
+    <string name="engine_vcf">找到 VCF（连续冲四必胜）</string>
+    <string name="hint_result">提示：%1$s</string>
+    <string name="record_copied">已复制棋谱</string>
+    <string name="record_invalid">剪贴板中没有有效的棋谱</string>
+    <string name="record_loaded">已载入 %1$d 手</string>
+    <string name="new_game_confirm">开始新局？</string>
+    <string name="change_needs_new_game">这将开始新局，是否继续？</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="about_text">弈心棋盘 Android 版\n\n基于 Yixin-Board 的五子棋/连珠棋盘，内置电脑引擎（Alpha-Beta 搜索与 VCF 求解）。\n\n规则：无禁手、标准（恰好五连）、有禁手（三三、四四、长连禁手判定）。</string>
+    <string name="menu_engine">电脑引擎</string>
+    <string name="engine_slowrenju">SlowRenju</string>
+    <string name="engine_builtin">内置引擎</string>
+    <string name="engine_slowrenju_long">SlowRenju（仅限 15×15）</string>
+    <string name="engine_builtin_long">内置引擎（所有棋盘大小）</string>
+    <string name="engine_slowrenju_unsupported">SlowRenju 仅支持 15×15，此棋盘使用内置引擎</string>
+    <string name="engine_rapfi">Rapfi</string>
+    <string name="engine_rapfi_long">Rapfi（最强，神经网络）</string>
+    <string name="engine_rapfi_unsupported">此设备无法使用 Rapfi（需要 64 位 ARM 或 x86-64），改用 SlowRenju</string>
+    <string name="about_engines">电脑引擎：Rapfi（dhbloo 等，GPL v3，网络权重 CC0）、SlowRenju（郝天一，GPL v3，已做速度优化）以及内置引擎。由于包含这些引擎，本应用以 GNU GPL v3 发布。源代码：github.com/samang600/Yixin-Board</string>
+</resources>

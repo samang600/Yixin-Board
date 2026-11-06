@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Yixin 오목판</string>
+    <string name="new_game">새 게임</string>
+    <string name="undo">무르기</string>
+    <string name="redo">다시</string>
+    <string name="hint">힌트</string>
+    <string name="ai_black_on">● AI</string>
+    <string name="ai_black_off">● 사람</string>
+    <string name="ai_white_on">○ AI</string>
+    <string name="ai_white_off">○ 사람</string>
+    <string name="play_now">AI 착수</string>
+    <string name="stop">중지</string>
+
+    <string name="menu_rule">규칙</string>
+    <string name="menu_size">판 크기</string>
+    <string name="menu_level">AI 생각 시간</string>
+    <string name="menu_numbers">수순 번호 표시</string>
+    <string name="menu_coords">좌표 표시</string>
+    <string name="menu_forbidden">금수 위치 표시</string>
+    <string name="menu_confirm">두 번 눌러 착수</string>
+    <string name="menu_copy">기보 복사</string>
+    <string name="menu_paste">기보 붙여넣기</string>
+    <string name="menu_about">정보</string>
+
+    <string name="rule_freestyle">자유룰 (5목 이상)</string>
+    <string name="rule_standard">표준룰 (정확히 5목)</string>
+    <string name="rule_renju">렌주룰 (흑 금수)</string>
+    <string name="rule_short_0">자유룰</string>
+    <string name="rule_short_1">표준룰</string>
+    <string name="rule_short_2">렌주룰</string>
+    <string name="seconds">%1$s초</string>
+
+    <string name="turn_black">흑 차례</string>
+    <string name="turn_white">백 차례</string>
+    <string name="thinking_black">AI(흑) 생각 중…</string>
+    <string name="thinking_white">AI(백) 생각 중…</string>
+    <string name="hint_thinking">최선의 수를 찾는 중…</string>
+    <string name="black_wins">흑 승리!</string>
+    <string name="white_wins">백 승리!</string>
+    <string name="draw">무승부</string>
+    <string name="forbidden_move">흑의 금수입니다 (렌주룰)</string>
+    <string name="engine_info">깊이 %1$d · 평가 %2$s · %3$s 노드 · %4$.1f초</string>
+    <string name="engine_win">필승</string>
+    <string name="engine_loss">필패</string>
+    <string name="engine_vcf">VCF 발견 (연속 4로 필승)</string>
+    <string name="hint_result">힌트: %1$s</string>
+    <string name="record_copied">기보를 복사했습니다</string>
+    <string name="record_invalid">클립보드에 올바른 기보가 없습니다</string>
+    <string name="record_loaded">%1$d수를 불러왔습니다</string>
+    <string name="new_game_confirm">새 게임을 시작할까요?</string>
+    <string name="change_needs_new_game">새 게임이 시작됩니다. 계속할까요?</string>
+    <string name="ok">확인</string>
+    <string name="cancel">취소</string>
+    <string name="about_text">안드로이드용 Yixin 오목판\n\nYixin-Board를 바탕으로 만든 오목/렌주 판이며, AI(알파-베타 탐색 + VCF 탐색)를 내장하고 있습니다.\n\n규칙: 자유룰, 표준룰(정확히 5목), 렌주룰(삼삼·사사·장목 금수 판정).</string>
+    <string name="menu_engine">AI 엔진</string>
+    <string name="engine_slowrenju">SlowRenju</string>
+    <string name="engine_builtin">내장 엔진</string>
+    <string name="engine_slowrenju_long">SlowRenju (15×15 전용)</string>
+    <string name="engine_builtin_long">내장 엔진 (모든 판 크기)</string>
+    <string name="engine_slowrenju_unsupported">SlowRenju는 15×15만 지원합니다. 이 판에서는 내장 엔진을 사용합니다</string>
+    <string name="engine_rapfi">Rapfi</string>
+    <string name="engine_rapfi_long">Rapfi (가장 강함, 신경망)</string>
+    <string name="engine_rapfi_unsupported">이 기기에서는 Rapfi를 쓸 수 없습니다(64비트 ARM 또는 x86-64 필요). 대신 SlowRenju를 사용합니다</string>
+    <string name="about_engines">AI 엔진: Rapfi (dhbloo 외, GPL v3, 신경망 가중치 CC0), SlowRenju (Tianyi Hao, GPL v3, 속도 최적화 적용), 내장 엔진. 이들을 포함하므로 이 앱은 GNU GPL v3로 배포됩니다. 소스 코드: github.com/samang600/Yixin-Board</string>
+</resources>
