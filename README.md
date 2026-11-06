@@ -18,8 +18,10 @@ For more information, please visit www.aiexp.info and send me e-mail: sunkaicn@g
 Android
 -------
 
-An Android version lives in [`android/`](android/README.md). Its AI is the SlowRenju engine
-(GPL v3, so the Android app is distributed under the GPL v3) plus a built-in Kotlin engine.
+An Android version lives in [`android/`](android/README.md). Its AI engines are Rapfi (with NNUE
+networks) and SlowRenju (both GPL v3, so the Android app is distributed under the GPL v3), plus a
+built-in Kotlin engine. Clone with `git submodule update --init android/third_party/rapfi
+android/third_party/rapfi-networks` to build it.
 A ready-built APK is at [`release/android/YixinBoard.apk`](release/android/YixinBoard.apk).
 
 弈心界面程序

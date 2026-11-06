@@ -50,7 +50,7 @@ class MainActivity : Activity() {
     private var levelIdx = 2
     private var showForbidden = true
     private var confirmMove = false
-    /** 0 = SlowRenju (when available and the board is 15x15), 1 = built-in engine. */
+    /** Preferred engine: 0 = Rapfi, 1 = SlowRenju, 2 = built-in (see [effectiveEngine] for fallbacks). */
     private var engineChoice = 0
 
     /** When true the AI does not start on its own (after undo / stop) until the next human action. */
@@ -109,6 +109,11 @@ class MainActivity : Activity() {
         maybeStartAi()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (isFinishing) RapfiRuntime.shutdown()
+    }
+
     override fun onPause() {
         super.onPause()
         abandonThinking()
@@ -125,7 +130,7 @@ class MainActivity : Activity() {
         levelIdx = prefs.getInt("level", 2).coerceIn(0, LEVELS_MS.size - 1)
         showForbidden = prefs.getBoolean("showForbidden", true)
         confirmMove = prefs.getBoolean("confirm", false)
-        engineChoice = prefs.getInt("engine", 0).coerceIn(0, 1)
+        engineChoice = prefs.getInt("engine2", 0).coerceIn(0, 2)
         boardView.showNumbers = prefs.getBoolean("numbers", false)
         boardView.showCoords = prefs.getBoolean("coords", true)
         paused = prefs.getBoolean("paused", false)
@@ -147,7 +152,7 @@ class MainActivity : Activity() {
             .putInt("level", levelIdx)
             .putBoolean("showForbidden", showForbidden)
             .putBoolean("confirm", confirmMove)
-            .putInt("engine", engineChoice)
+            .putInt("engine2", engineChoice)
             .putBoolean("numbers", boardView.showNumbers)
             .putBoolean("coords", boardView.showCoords)
             .putBoolean("paused", paused)
@@ -242,13 +247,26 @@ class MainActivity : Activity() {
 
     // ------------------------------------------------------------------ engine thread
 
-    private fun useSlowRenju() = engineChoice == 0 && SlowRenju.supports(size)
+    private enum class EngineKind { RAPFI, SLOWRENJU, BUILTIN }
 
-    private fun engineName() = getString(if (useSlowRenju()) R.string.engine_slowrenju else R.string.engine_builtin)
+    /** Rapfi (arm64/x86_64 builds, any board) → SlowRenju (15×15) → built-in. */
+    private fun effectiveEngine(): EngineKind = when {
+        engineChoice == 0 && RapfiRuntime.isAvailable(this) -> EngineKind.RAPFI
+        engineChoice <= 1 && SlowRenju.supports(size) -> EngineKind.SLOWRENJU
+        else -> EngineKind.BUILTIN
+    }
+
+    private fun engineName(kind: EngineKind = effectiveEngine()) = getString(
+        when (kind) {
+            EngineKind.RAPFI -> R.string.engine_rapfi
+            EngineKind.SLOWRENJU -> R.string.engine_slowrenju
+            EngineKind.BUILTIN -> R.string.engine_builtin
+        }
+    )
 
     private fun startThinking(hint: Boolean) {
-        val slow = useSlowRenju()
-        val t = Thinking(++version, hint, engineName())
+        val kind = effectiveEngine()
+        val t = Thinking(++version, hint, engineName(kind))
         thinking = t
         val moves = ArrayList(game.moves)
         val side = game.sideToMove
@@ -259,15 +277,18 @@ class MainActivity : Activity() {
         val onProgress: (SearchResult) -> Unit = { progress ->
             handler.post { if (thinking === t && !t.discard) showEngineInfo(t.engineName, progress) }
         }
+        val appContext = applicationContext
         val work = Runnable {
-            val result = if (slow) {
-                SlowRenju.think(moves, gameRule, time, t.cancel, onProgress)
-            } else {
-                Engine(gameSize, gameRule).run {
+            val result = (if (kind == EngineKind.RAPFI) {
+                RapfiRuntime.think(appContext, moves, gameSize, gameRule, time, t.cancel, onProgress)
+            } else null)
+                ?: (if (kind != EngineKind.BUILTIN && SlowRenju.supports(gameSize)) {
+                    SlowRenju.think(moves, gameRule, time, t.cancel, onProgress)
+                } else null)
+                ?: Engine(gameSize, gameRule).run {
                     setPosition(moves)
                     think(side, time, t.cancel, onProgress)
                 }
-            }
             handler.post { onThinkingDone(t, result) }
         }
         // Large stack: the native SlowRenju search recurses deeply.
@@ -380,7 +401,7 @@ class MainActivity : Activity() {
             R.id.menu_paste -> pasteRecord()
             R.id.menu_about -> AlertDialog.Builder(this)
                 .setTitle(R.string.app_name)
-                .setMessage(getString(R.string.about_text) + "\n\n" + getString(R.string.about_slowrenju) + "\n\nv" + appVersion())
+                .setMessage(getString(R.string.about_text) + "\n\n" + getString(R.string.about_engines) + "\n\nv" + appVersion())
                 .setPositiveButton(R.string.ok, null)
                 .show()
             else -> return super.onOptionsItemSelected(item)
@@ -424,7 +445,11 @@ class MainActivity : Activity() {
     }
 
     private fun chooseEngine() {
-        val names = arrayOf(getString(R.string.engine_slowrenju_long), getString(R.string.engine_builtin_long))
+        val names = arrayOf(
+            getString(R.string.engine_rapfi_long),
+            getString(R.string.engine_slowrenju_long),
+            getString(R.string.engine_builtin_long),
+        )
         AlertDialog.Builder(this)
             .setTitle(R.string.menu_engine)
             .setSingleChoiceItems(names, engineChoice) { d, which ->
@@ -432,7 +457,10 @@ class MainActivity : Activity() {
                 saveState()
                 refresh()
                 d.dismiss()
-                if (which == 0 && !SlowRenju.supports(size)) toast(getString(R.string.engine_slowrenju_unsupported))
+                when {
+                    which == 0 && !RapfiRuntime.isAvailable(this) -> toast(getString(R.string.engine_rapfi_unsupported))
+                    which == 1 && !SlowRenju.supports(size) -> toast(getString(R.string.engine_slowrenju_unsupported))
+                }
             }
             .show()
     }

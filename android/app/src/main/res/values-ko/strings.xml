@@ -56,8 +56,11 @@
     <string name="menu_engine">AI 엔진</string>
     <string name="engine_slowrenju">SlowRenju</string>
     <string name="engine_builtin">내장 엔진</string>
-    <string name="engine_slowrenju_long">SlowRenju (더 강함, 15×15 전용)</string>
+    <string name="engine_slowrenju_long">SlowRenju (15×15 전용)</string>
     <string name="engine_builtin_long">내장 엔진 (모든 판 크기)</string>
     <string name="engine_slowrenju_unsupported">SlowRenju는 15×15만 지원합니다. 이 판에서는 내장 엔진을 사용합니다</string>
-    <string name="about_slowrenju">AI 엔진: SlowRenju (Tianyi Hao, GPL v3), 속도 최적화 적용. SlowRenju를 포함하므로 이 앱은 GNU GPL v3로 배포됩니다. 소스 코드: github.com/samang600/Yixin-Board</string>
+    <string name="engine_rapfi">Rapfi</string>
+    <string name="engine_rapfi_long">Rapfi (가장 강함, 신경망)</string>
+    <string name="engine_rapfi_unsupported">이 기기에서는 Rapfi를 쓸 수 없습니다(64비트 ARM 또는 x86-64 필요). 대신 SlowRenju를 사용합니다</string>
+    <string name="about_engines">AI 엔진: Rapfi (dhbloo 외, GPL v3, 신경망 가중치 CC0), SlowRenju (Tianyi Hao, GPL v3, 속도 최적화 적용), 내장 엔진. 이들을 포함하므로 이 앱은 GNU GPL v3로 배포됩니다. 소스 코드: github.com/samang600/Yixin-Board</string>
 </resources>

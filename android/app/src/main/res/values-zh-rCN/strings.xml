@@ -56,8 +56,11 @@
     <string name="menu_engine">电脑引擎</string>
     <string name="engine_slowrenju">SlowRenju</string>
     <string name="engine_builtin">内置引擎</string>
-    <string name="engine_slowrenju_long">SlowRenju（更强，仅限 15×15）</string>
+    <string name="engine_slowrenju_long">SlowRenju（仅限 15×15）</string>
     <string name="engine_builtin_long">内置引擎（所有棋盘大小）</string>
     <string name="engine_slowrenju_unsupported">SlowRenju 仅支持 15×15，此棋盘使用内置引擎</string>
-    <string name="about_slowrenju">电脑引擎：SlowRenju（郝天一，GPL v3），已做速度优化。由于包含 SlowRenju，本应用以 GNU GPL v3 发布。源代码：github.com/samang600/Yixin-Board</string>
+    <string name="engine_rapfi">Rapfi</string>
+    <string name="engine_rapfi_long">Rapfi（最强，神经网络）</string>
+    <string name="engine_rapfi_unsupported">此设备无法使用 Rapfi（需要 64 位 ARM 或 x86-64），改用 SlowRenju</string>
+    <string name="about_engines">电脑引擎：Rapfi（dhbloo 等，GPL v3，网络权重 CC0）、SlowRenju（郝天一，GPL v3，已做速度优化）以及内置引擎。由于包含这些引擎，本应用以 GNU GPL v3 发布。源代码：github.com/samang600/Yixin-Board</string>
 </resources>

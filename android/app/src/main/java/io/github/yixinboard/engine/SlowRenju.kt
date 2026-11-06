@@ -66,7 +66,7 @@ object SlowRenju {
             watchdog.interrupt()
         }
         val result = statusResult(move, elapsed())
-        if (isLegal(moves, rule, move)) return result
+        if (Legality.isLegal(moves, BOARD_SIZE, rule, move)) return result
 
         // Should not happen; never let the game get stuck on a bad engine answer.
         val engine = Engine(BOARD_SIZE, rule)
@@ -84,13 +84,5 @@ object SlowRenju {
             else -> eval * 10
         }
         return SearchResult(move, score, s[1].toInt(), s[0], elapsedMs)
-    }
-
-    private fun isLegal(moves: List<Int>, rule: Rule, move: Int): Boolean {
-        if (move !in 0 until BOARD_SIZE * BOARD_SIZE || move in moves) return false
-        if (rule != Rule.RENJU || moves.size % 2 != 0) return true
-        val b = Board(BOARD_SIZE)
-        moves.forEachIndexed { i, m -> b.cells[m] = if (i % 2 == 0) BLACK else WHITE }
-        return !Rules.isForbidden(b, move % BOARD_SIZE, move / BOARD_SIZE)
     }
 }

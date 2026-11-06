@@ -56,8 +56,11 @@
     <string name="menu_engine">AI engine</string>
     <string name="engine_slowrenju">SlowRenju</string>
     <string name="engine_builtin">Built-in</string>
-    <string name="engine_slowrenju_long">SlowRenju (stronger, 15×15 only)</string>
+    <string name="engine_slowrenju_long">SlowRenju (15×15 only)</string>
     <string name="engine_builtin_long">Built-in engine (all board sizes)</string>
     <string name="engine_slowrenju_unsupported">SlowRenju only supports 15×15; the built-in engine is used on this board</string>
-    <string name="about_slowrenju">AI engine: SlowRenju by Tianyi Hao (GPL v3), with speed optimisations. Because it includes SlowRenju, this app is distributed under the GNU GPL v3; source code: github.com/samang600/Yixin-Board</string>
+    <string name="engine_rapfi">Rapfi</string>
+    <string name="engine_rapfi_long">Rapfi (strongest, neural network)</string>
+    <string name="engine_rapfi_unsupported">Rapfi is not available on this device (needs a 64-bit ARM or x86-64 CPU); SlowRenju is used instead</string>
+    <string name="about_engines">AI engines: Rapfi by dhbloo and contributors (GPL v3; network weights CC0), SlowRenju by Tianyi Hao (GPL v3, with speed optimisations) and a built-in engine. Because it includes them, this app is distributed under the GNU GPL v3; source code: github.com/samang600/Yixin-Board</string>
 </resources>
